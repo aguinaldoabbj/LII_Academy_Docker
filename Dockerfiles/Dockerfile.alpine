@@ -1,7 +1,7 @@
 FROM alpine
 
 # some customization
-COPY motd /etc/motd
+COPY motd /etc/
 RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd && head -1 /etc/issue' >> /root/.bashrc
 
 # no-cache switch updates package index and deletes cache
