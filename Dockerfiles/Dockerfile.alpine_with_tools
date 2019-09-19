@@ -1,1 +1,13 @@
+FROM aguinaldoabbj/alpine
 
+# installing tools
+RUN apk update && apk add \
+    wget \
+    telnet \
+    unzip \
+    git \
+    htop \
+    && rm -rf /var/cache/apk/*
+ 
+
+    
