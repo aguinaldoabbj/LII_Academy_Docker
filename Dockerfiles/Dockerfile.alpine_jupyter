@@ -1,1 +1,32 @@
+FROM aguinaldoabbj/alpine
+
+# installing basic tools
+RUN apk --no-cache add \
+    wget \
+    busybox-extras \
+    unzip \
+    git \
+    htop 
+    
+# installing dependencies
+RUN apk --no-cache add \
+    build-base \
+    bzip2 \
+    ca-certificates \
+    curl \
+    openssh-client \
+    patch \
+    python3-dev \
+    py3-zmq \
+    readline-dev \
+    tar 
+    
+RUN pip3 install --no-cache-dir jupyterlab && \
+    mkdir /notebooks
+  
+EXPOSE 8888
+
+ENTRYPOINT ["/sbin/tini", "--"]
+
+CMD ["jupyter", "lab", "--allow-root", "--port=8888", "--ip='*'", "--no-browser", "--notebook-dir=/notebooks"]
 
