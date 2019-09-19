@@ -1,14 +1,16 @@
 FROM alpine
 
+# some customization
 COPY motd /etc/motd
+RUN echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd && head -1 /etc/issue' >> /root/.bashrc
 
-#no-cache switch updates package index and deletes cache
+# no-cache switch updates package index and deletes cache
 RUN apk --no-cache add \
     bash \
     tini
     
-ENTRYPOINT ["/tini", "--"]
+# safe entry   
+ENTRYPOINT ["sbin/tini", "--"]
 
-CMD ["bash"]
-
-#CMD ["tail -f", "/dev/null"]
+# makes container run forever
+CMD ["tail -f", "/dev/null"]
