@@ -1,7 +1,14 @@
 FROM alpine
 
-RUN apk update && apk install bash
-
 COPY motd /etc/motd
 
-CMD ["tail -f", "/dev/null"]
+#no-cache switch updates package index and deletes cache
+RUN apk --no-cache add \
+    bash \
+    tini
+    
+ENTRYPOINT ["/tini", "--"]
+
+CMD ["bash"]
+
+#CMD ["tail -f", "/dev/null"]
