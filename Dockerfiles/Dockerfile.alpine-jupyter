@@ -20,13 +20,21 @@ RUN apk --no-cache add \
     py3-zmq \
     readline-dev \
     tar 
+
+# for pandas and numpy
+RUN echo "http://dl-8.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+    && apk add --no-cache \
+    py3-numpy \
+    py3-pandas
     
-RUN pip3 install --no-cache-dir jupyterlab && \
-    mkdir /notebooks
+RUN pip3 install --no-cache-dir \
+    jupyterlab \
+    sqlalchemy \
+    pymysql \
+    && mkdir /notebooks
   
 EXPOSE 8888
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
 CMD ["jupyter", "lab", "--allow-root", "--port=8888", "--ip='*'", "--no-browser", "--notebook-dir=/notebooks"]
-
