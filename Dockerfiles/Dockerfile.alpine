@@ -13,4 +13,5 @@ RUN apk --no-cache add \
 ENTRYPOINT ["sbin/tini", "--"]
 
 # makes container run forever
-CMD ["tail -f", "/dev/null"]
+#CMD ["/bin/tail", "-f", "/dev/null"]
+CMD tail -f /dev/null

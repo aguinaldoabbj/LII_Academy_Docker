@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-    db:
+    mysqldb:
         image: mysql
         command: --default-authentication-plugin=mysql_native_password
         restart: always
@@ -9,6 +9,14 @@ services:
             - test_mysql.env
         ports:
             - '3306:3306'
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 100M
+                reservations:
+                    cpus: '0.25'
+                    memory: 20M
     notebook:
         image: aguinaldoabbj/alpine-jupyter
         hostname: notebook
@@ -20,3 +28,11 @@ services:
             user: root
         env_file:
             - test_mysql.env
+        deploy:
+            resources:
+                limits:
+                    cpus: '1'
+                    memory: 1G
+                reservations:
+                    cpus: '0.25'
+                    memory: 50M
